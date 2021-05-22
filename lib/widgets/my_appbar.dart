@@ -40,6 +40,8 @@ class _MyAppBarState extends State<MyAppBar> {
     return SliverAppBar(
       automaticallyImplyLeading: false,
       elevation: 0.0,
+      floating: true,
+      snap: true,
       title: FlatButton(
         onPressed: () {
           locationData.getCurrentPosition();
@@ -50,7 +52,6 @@ class _MyAppBarState extends State<MyAppBar> {
               screen: MapScreen(),
               withNavBar: false,
               pageTransitionAnimation: PageTransitionAnimation.cupertino,
-
             );
           } else {
             print('Permission not allowed');
@@ -87,7 +88,6 @@ class _MyAppBarState extends State<MyAppBar> {
           ],
         ),
       ),
-
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(56),
         child: Padding(

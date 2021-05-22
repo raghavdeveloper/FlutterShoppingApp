@@ -10,33 +10,54 @@ import 'package:geolocator/geolocator.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
-class TopPickStore extends StatelessWidget {
+class TopPickStore extends StatefulWidget {
+  @override
+  _TopPickStoreState createState() => _TopPickStoreState();
+}
+
+class _TopPickStoreState extends State<TopPickStore> {
+  double latitude = 0.0;
+  double longitude = 0.0;
+
+  @override
+  void didChangeDependencies() {
+    final _storeData = Provider.of<StoreProvider>(context);
+    _storeData.determinePosition().then((position) {
+      setState(() {
+        latitude = position.latitude;
+        longitude = position.longitude;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
+  String getDistance(location) {
+    var distance = Geolocator.distanceBetween(
+        latitude, longitude, location.latitude, location.longitude);
+    var distanceInKm = distance / 1000;
+    return distanceInKm.toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     StoreServices _storeServices = StoreServices();
     final _storeData = Provider.of<StoreProvider>(context);
-    _storeData.geetUserLocationData(context);
-
-    String getDistance(location) {
-      var distance = Geolocator.distanceBetween(_storeData.userLatitude,
-          _storeData.userLongitude, location.latitude, location.longitude);
-      var distanceInKm = distance / 1000;
-      return distanceInKm.toStringAsFixed(2);
-    }
+    //_storeData.getUserLocationData(context);
 
     return Container(
       child: StreamBuilder<QuerySnapshot>(
         stream: _storeServices.getTopPickedStore(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapShot) {
-          if (!snapShot.hasData) return CircularProgressIndicator();
+          if (!snapShot.hasData)
+            return Center(child: CircularProgressIndicator());
 
           //need to confirm even shop is near or not
 
           List shopDistance = [];
           for (int i = 0; i <= snapShot.data.docs.length - 1; i++) {
             var distance = Geolocator.distanceBetween(
-                _storeData.userLatitude,
-                _storeData.userLongitude,
+                latitude,
+                longitude,
                 snapShot.data.docs[i]['location'].latitude,
                 snapShot.data.docs[i]['location'].longitude);
             var distanceInKm = distance / 1000;
@@ -81,8 +102,8 @@ class TopPickStore extends StatelessWidget {
                             //we can increase or decrease the distance
                             return InkWell(
                               onTap: () {
-                                _storeData.getSelectedStore(
-                                    document['shopName'], document['uid']);
+                                _storeData.getSelectedStore(document,
+                                    getDistance(document['location']));
                                 pushNewScreenWithRouteSettings(
                                   context,
                                   settings:

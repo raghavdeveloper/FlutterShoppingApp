@@ -13,8 +13,6 @@ class ShopBanner extends StatefulWidget {
 }
 
 class _ShopBannerState extends State<ShopBanner> {
-  StoreServices _services = StoreServices();
-
   int _index = 0;
   int _dataLength = 1;
 
@@ -31,7 +29,7 @@ class _ShopBannerState extends State<ShopBanner> {
     var _fireStore = FirebaseFirestore.instance;
     QuerySnapshot snapshot = await _fireStore
         .collection('shopBanner')
-        .where('sellerUid', isEqualTo: storeProvider.selectedStoreId)
+        .where('sellerUid', isEqualTo: storeProvider.storeDetails['uid'])
         .get();
     if (mounted) {
       setState(() {

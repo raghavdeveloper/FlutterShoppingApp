@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/providers/store_provider.dart';
+import 'package:flutter_shopping_app/widgets/categories_widget.dart';
 import 'package:flutter_shopping_app/widgets/image_slider.dart';
 import 'package:flutter_shopping_app/widgets/my_appbar.dart';
 import 'package:flutter_shopping_app/widgets/shop_appbar.dart';
@@ -21,6 +22,7 @@ class ShopHomeScreen extends StatelessWidget {
           child: Column(
             children: [
               ShopBanner(),
+              Expanded(child: ShopCategories()),
             ],
           ),
         ),

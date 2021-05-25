@@ -66,7 +66,7 @@ class _ShopBannerState extends State<ShopBanner> {
                               return SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   child: Image.network(
-                                    getImage['imageUrl'],
+                                    getImage['bannerUrl'],
                                     fit: BoxFit.fill,
                                   ));
                             },

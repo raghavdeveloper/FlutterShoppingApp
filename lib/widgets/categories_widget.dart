@@ -2,7 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_app/providers/store_provider.dart';
+import 'package:flutter_shopping_app/screens/product_list_screen.dart';
+import 'products/product_list.dart';
+import 'package:flutter_shopping_app/screens/shop_home_screen.dart';
 import 'package:flutter_shopping_app/services/product_services.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class ShopCategories extends StatefulWidget {
@@ -36,6 +40,8 @@ class _ShopCategoriesState extends State<ShopCategories> {
 
   @override
   Widget build(BuildContext context) {
+    var _storeProvider = Provider.of<StoreProvider>(context);
+
     return FutureBuilder(
       future: _services.category.get(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -46,7 +52,7 @@ class _ShopCategoriesState extends State<ShopCategories> {
         }
         if (_catList.length == 0) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: Text('lol'),
           );
         }
         if (!snapshot.hasData) {
@@ -90,31 +96,48 @@ class _ShopCategoriesState extends State<ShopCategories> {
                 direction: Axis.horizontal,
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                   return _catList.contains(document.data()['name'])
-                      ? //only if catList contain the category name from selected vendor
-                      Container(
-                          width: 120,
-                          height: 150,
+                      ? //only if catList contain the category name from selected shop
+                      InkWell(
+                          onTap: () {
+                            _storeProvider
+                                .selectedCategory(document.data()['name']);
+                            _storeProvider.selectedCategorySub(null);
+
+                            pushNewScreenWithRouteSettings(
+                              context,
+                              settings:
+                                  RouteSettings(name: ProductListScreen.id),
+                              screen: ProductListScreen(),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.cupertino,
+                            );
+                          },
                           child: Container(
-                            //card
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border:
-                                    Border.all(color: Colors.grey, width: .5)),
-                            child: Column(
-                              children: [
-                                Center(
-                                  child:
-                                      Image.network(document.data()['image']),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: Text(
-                                    document.data()['name'],
-                                    textAlign: TextAlign.center,
+                            width: 120,
+                            height: 150,
+                            child: Container(
+                              //card
+                              decoration: BoxDecoration(
+                                  //color: Colors.white,
+                                  border: Border.all(
+                                      color: Colors.grey, width: .5)),
+                              child: Column(
+                                children: [
+                                  Center(
+                                    child:
+                                        Image.network(document.data()['image']),
                                   ),
-                                ),
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8, right: 8),
+                                    child: Text(
+                                      document.data()['name'],
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         )

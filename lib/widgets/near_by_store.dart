@@ -17,28 +17,6 @@ class NearByStores extends StatefulWidget {
 }
 
 class _NearByStoresState extends State<NearByStores> {
-  double latitude = 0.0;
-  double longitude = 0.0;
-
-  @override
-  void didChangeDependencies() {
-    final _storeData = Provider.of<StoreProvider>(context);
-    _storeData.determinePosition().then((position) {
-      setState(() {
-        latitude = position.latitude;
-        longitude = position.longitude;
-      });
-    });
-    super.didChangeDependencies();
-  }
-
-  String getDistance(location) {
-    var distance = Geolocator.distanceBetween(
-        latitude, longitude, location.latitude, location.longitude);
-    var distanceInKm = distance / 1000;
-    return distanceInKm.toStringAsFixed(2);
-  }
-
   StoreServices _storeServices = StoreServices();
   PaginateRefreshedChangeListener refreshedChangeListener =
       PaginateRefreshedChangeListener();
@@ -46,7 +24,14 @@ class _NearByStoresState extends State<NearByStores> {
   @override
   Widget build(BuildContext context) {
     final _storeData = Provider.of<StoreProvider>(context);
-    //_storeData.geetUserLocationData(context);
+    _storeData.geetUserLocationData(context);
+
+    String getDistance(location) {
+      var distance = Geolocator.distanceBetween(_storeData.userLatitude,
+          _storeData.userLongitude, location.latitude, location.longitude);
+      var distanceInKm = distance / 1000;
+      return distanceInKm.toStringAsFixed(2);
+    }
 
     return Container(
       color: Colors.white,
@@ -58,8 +43,8 @@ class _NearByStoresState extends State<NearByStores> {
           List shopDistance = [];
           for (int i = 0; i <= snapShot.data.docs.length - 1; i++) {
             var distance = Geolocator.distanceBetween(
-                latitude,
-                longitude,
+                _storeData.userLatitude,
+                _storeData.userLongitude,
                 snapShot.data.docs[i]['location'].latitude,
                 snapShot.data.docs[i]['location'].longitude);
             var distanceInKm = distance / 1000;

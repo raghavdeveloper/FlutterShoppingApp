@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_shopping_app/widgets/products/bottom_sheet_container.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   static const String id = 'product-details-screen';
@@ -30,71 +31,7 @@ class ProductDetailsScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomSheet: Container(
-        child: Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  EasyLoading.show(status: 'Saving...');
-                  saveForLater().then((value) {
-                    EasyLoading.showSuccess('Saved Successfully');
-                  });
-                },
-                child: Container(
-                  height: 56,
-                  color: Colors.grey[800],
-                  child: Center(
-                      child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          CupertinoIcons.bookmark,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          'Save for later',
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 56,
-                color: Colors.red[400],
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.shopping_basket_outlined, color: Colors.white),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'Add to basket',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                )),
-              ),
-            ),
-          ],
-        ),
-      ),
+      bottomSheet: BottomSheetContainer(document),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(

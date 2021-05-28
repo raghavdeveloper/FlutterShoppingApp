@@ -5,6 +5,7 @@ import 'package:flutter_shopping_app/screens/favourite_screen.dart';
 import 'package:flutter_shopping_app/screens/homeScreen.dart';
 import 'package:flutter_shopping_app/screens/my_orders_screen.dart';
 import 'package:flutter_shopping_app/screens/profile_screen.dart';
+import 'package:flutter_shopping_app/widgets/cart/cart_notification.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class MainScreen extends StatelessWidget {
@@ -36,7 +37,7 @@ class MainScreen extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: Icon(CupertinoIcons.square_favorites_alt),
           title: ("My Favourites"),
-          activeColorPrimary: Theme.of(context).primaryColor, 
+          activeColorPrimary: Theme.of(context).primaryColor,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
@@ -55,6 +56,11 @@ class MainScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 56),
+        child: CartNotification(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: PersistentTabView(
         context,
         navBarHeight: 56,
@@ -73,12 +79,9 @@ class MainScreen extends StatelessWidget {
         hideNavigationBarWhenKeyboardShows: true,
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(0.0),
-          colorBehindNavBar: Colors.white,
-          border: Border.all(
-            color: Colors.black45
-          )
-        ),
+            borderRadius: BorderRadius.circular(0.0),
+            colorBehindNavBar: Colors.white,
+            border: Border.all(color: Colors.black45)),
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
         itemAnimationProperties: ItemAnimationProperties(

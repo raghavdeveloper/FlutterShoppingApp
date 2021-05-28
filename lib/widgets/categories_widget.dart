@@ -115,7 +115,7 @@ class _ShopCategoriesState extends State<ShopCategories> {
                           },
                           child: Container(
                             width: 120,
-                            height: 150,
+                            height: 162,
                             child: Container(
                               //card
                               decoration: BoxDecoration(

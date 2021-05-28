@@ -7,8 +7,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_shopping_app/providers/auth_provider.dart';
+import 'package:flutter_shopping_app/providers/cart_provider.dart';
 import 'package:flutter_shopping_app/providers/location_provider.dart';
 import 'package:flutter_shopping_app/providers/store_provider.dart';
+import 'package:flutter_shopping_app/screens/cart_screen.dart';
 import 'package:flutter_shopping_app/screens/homeScreen.dart';
 import 'package:flutter_shopping_app/screens/landing_screen.dart';
 import 'package:flutter_shopping_app/screens/login_screen.dart';
@@ -39,6 +41,9 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => StoreProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -63,6 +68,7 @@ class MyApp extends StatelessWidget {
         ShopHomeScreen.id: (context) => ShopHomeScreen(),
         ProductListScreen.id: (context) => ProductListScreen(),
         ProductDetailsScreen.id: (context) => ProductDetailsScreen(),
+        CartScreen.id: (context) => CartScreen(),
       },
       builder: EasyLoading.init(),
     );

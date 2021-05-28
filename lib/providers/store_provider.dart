@@ -33,7 +33,7 @@ class StoreProvider with ChangeNotifier {
   }
 
   selectedCategorySub(subCategory) {
-    this.selectedSubCategory = selectedProductCategory;
+    this.selectedSubCategory = subCategory;
     notifyListeners();
   }
 

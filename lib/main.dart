@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_shopping_app/providers/auth_provider.dart';
 import 'package:flutter_shopping_app/providers/cart_provider.dart';
+import 'package:flutter_shopping_app/providers/coupon_provider.dart';
 import 'package:flutter_shopping_app/providers/location_provider.dart';
+import 'package:flutter_shopping_app/providers/order_provider.dart';
 import 'package:flutter_shopping_app/providers/store_provider.dart';
 import 'package:flutter_shopping_app/screens/cart_screen.dart';
 import 'package:flutter_shopping_app/screens/homeScreen.dart';
@@ -18,6 +20,8 @@ import 'package:flutter_shopping_app/screens/main_screen.dart';
 import 'package:flutter_shopping_app/screens/map_screen.dart';
 import 'package:flutter_shopping_app/screens/product_details_screen.dart';
 import 'package:flutter_shopping_app/screens/product_list_screen.dart';
+import 'package:flutter_shopping_app/screens/profile_screen.dart';
+import 'package:flutter_shopping_app/screens/profile_update_screen.dart';
 import 'widgets/products/product_list.dart';
 import 'package:flutter_shopping_app/screens/shop_home_screen.dart';
 
@@ -44,6 +48,12 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => CartProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CouponProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OrderProvider(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -69,6 +79,8 @@ class MyApp extends StatelessWidget {
         ProductListScreen.id: (context) => ProductListScreen(),
         ProductDetailsScreen.id: (context) => ProductDetailsScreen(),
         CartScreen.id: (context) => CartScreen(),
+        ProfileScreen.id: (context) => ProfileScreen(),
+        UpdateProfile.id: (context) => UpdateProfile(),
       },
       builder: EasyLoading.init(),
     );

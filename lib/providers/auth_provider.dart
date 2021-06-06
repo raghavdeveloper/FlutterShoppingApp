@@ -1,4 +1,5 @@
 //@dart=2.9
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class AuthProvider with ChangeNotifier {
   double longitude;
   String address;
   String location;
+  DocumentSnapshot snapshot;
 
   Future<void> verifyPhone({BuildContext context, String number}) async {
     this.loading = true;
@@ -187,5 +189,20 @@ class AuthProvider with ChangeNotifier {
     });
     this.loading = false;
     notifyListeners();
+  }
+
+  getUserDetails() async {
+    DocumentSnapshot result = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_auth.currentUser.uid)
+        .get();
+    if (result != null) {
+      this.snapshot = result;
+      notifyListeners();
+    } else {
+      this.snapshot = null;
+      notifyListeners();
+    }
+    return result;
   }
 }

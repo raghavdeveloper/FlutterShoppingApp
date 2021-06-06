@@ -78,7 +78,7 @@ class MainScreen extends StatelessWidget {
         // Default is true.
         hideNavigationBarWhenKeyboardShows: true,
         // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
+        decoration: NavBarDecoration (
             borderRadius: BorderRadius.circular(0.0),
             colorBehindNavBar: Colors.white,
             border: Border.all(color: Colors.black45)),

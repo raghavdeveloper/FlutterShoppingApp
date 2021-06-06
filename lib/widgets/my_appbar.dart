@@ -44,18 +44,19 @@ class _MyAppBarState extends State<MyAppBar> {
       snap: true,
       title: FlatButton(
         onPressed: () {
-          locationData.getCurrentPosition();
-          if (locationData.permissionAllowed == true) {
-            pushNewScreenWithRouteSettings(
-              context,
-              settings: RouteSettings(name: MapScreen.id),
-              screen: MapScreen(),
-              withNavBar: false,
-              pageTransitionAnimation: PageTransitionAnimation.cupertino,
-            );
-          } else {
-            print('Permission not allowed');
-          }
+          locationData.getCurrentPosition().then((value) {
+            if (value != null) {
+              pushNewScreenWithRouteSettings(
+                context,
+                settings: RouteSettings(name: MapScreen.id),
+                screen: MapScreen(),
+                withNavBar: false,
+                pageTransitionAnimation: PageTransitionAnimation.cupertino,
+              );
+            } else {
+              print('Permission not allowed');
+            }
+          });
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,

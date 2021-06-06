@@ -108,7 +108,6 @@ class _ShopCategoriesState extends State<ShopCategories> {
                               settings:
                                   RouteSettings(name: ProductListScreen.id),
                               screen: ProductListScreen(),
-                              withNavBar: true,
                               pageTransitionAnimation:
                                   PageTransitionAnimation.cupertino,
                             );

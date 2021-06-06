@@ -48,7 +48,7 @@ class _ImageSliderState extends State<ImageSlider> {
                         padding: const EdgeInsets.only(top: 4),
                         child: CarouselSlider.builder(
                             itemCount: snapShot.data.length,
-                            itemBuilder: (context, int index) {
+                            itemBuilder: (text, int index, _) {
                               DocumentSnapshot sliderImage =
                                   snapShot.data[index];
                               Map getImage = sliderImage.data();
